@@ -1,0 +1,77 @@
+def solicitar_edad():
+    """Solicita una edad al usuario y valida que sea un número entero positivo."""
+    while True:
+        entrada = input("Favor digite su edad: ").strip()
+        if entrada.isdigit():
+            return int(entrada)
+        print("⚠️ Error: Por favor, introduzca un número válido (solo dígitos).")
+
+def evaluar_etapa(edad):
+    """Determina la etapa biológica según los nuevos rangos (Actividad 1)."""
+    if edad < 0:
+        return "No nacido / Error"
+    elif 0 <= edad <= 2:
+        return "Bebé"
+    elif 3 <= edad <= 12:
+        return "Niño/a"
+    elif 13 <= edad <= 17:
+        return "Adolescente"
+    elif 18 <= edad <= 59:
+        return "Adulto"
+    else:
+        return "Adulto Mayor"
+
+def mostrar_historial(historial):
+    """Muestra el historial y el total de consultas realizadas (Actividad 3)."""
+    print("\n--- HISTORIAL DE CONSULTAS ---")
+    if not historial:
+        print("El historial está vacío.")
+        return
+    
+    for indice, registro in enumerate(historial, 1):
+        print(f"{indice}. Edad: {registro['edad']} → Etapa: {registro['resultado']}")
+    
+    # Actividad 3: Contar cuántas consultas se han realizado
+    print(f"\n📊 Total de consultas realizadas: {len(historial)}")
+
+def transicion_biologica():
+    """Función principal que coordina el flujo del programa."""
+    historial_resultados = []
+    
+    while True:
+        print("\n=================================")
+        print(" SISTEMA DE TRANSICIÓN BIOLÓGICA ")
+        print("=================================")
+        print("1. Evaluar Edad")
+        print("2. Ver Historial")
+        print("3. Borrar Historial") # Actividad 2
+        print("4. Salir")
+        
+        opcion = input("\nSeleccione una opción: ").strip()
+        
+        if opcion == "1":
+            edad = solicitar_edad()
+            resultado = evaluar_etapa(edad)
+            
+            # Guardar en el historial como diccionario
+            historial_resultados.append({"edad": edad, "resultado": resultado})
+            
+            print(f"\nResultado: Eres un {resultado}")
+            
+        elif opcion == "2":
+            mostrar_historial(historial_resultados)
+            
+        elif opcion == "3":
+            # Actividad 2: Borrar Historial
+            historial_resultados.clear()
+            print("\n🧹 ¡Historial borrado correctamente!")
+            
+        elif opcion == "4":
+            print("\n👋 ¡Gracias por usar el sistema! Saliendo...")
+            break
+        else:
+            print("⚠️ Opción no válida. Intente de nuevo (1-4).")
+
+# Punto de entrada del programa
+if __name__ == "__main__":
+    transicion_biologica()
